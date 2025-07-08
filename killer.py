@@ -3,13 +3,14 @@ import pandas as pd
 import gspread
 from google.oauth2.service_account import Credentials
 import plotly.express as px
-
+import json
+creds_dict = st.secrets["gcp_service_account"]
 # Streamlit setup
 st.set_page_config(page_title="Application Tracker", layout="wide")
 
 # Google Sheets auth
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_file("creds.json", scopes=SCOPES)
+creds = Credentials.from_service_account_info(json.loads(json.dumps(creds_dict)), scopes=SCOPES)
 client = gspread.authorize(creds)
 
 # Open Sheet
